@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Real-Time Poll</title>
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+</head>
+
+<body>
+
+    <h1>📊 Live Programming Poll</h1>
+
+    <h2>Which programming language do you prefer?</h2>
+
+    <div id="poll"></div>
+
+    <script>
+
+        const socket = io();
+
+        socket.on("voteUpdate", (votes) => {
+
+            const poll = document.getElementById("poll");
+
+            poll.innerHTML = "";
+
+            Object.entries(votes).forEach(([language, count]) => {
+
+                const button = document.createElement("button");
+
+                button.innerText =
+                    `${language} - ${count} votes`;
+
+                button.onclick = () => {
+                    socket.emit("vote", language);
+                };
+
+                poll.appendChild(button);
+
+                poll.appendChild(
+                    document.createElement("br")
+                );
+
+                poll.appendChild(
+                    document.createElement("br")
+                );
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>
