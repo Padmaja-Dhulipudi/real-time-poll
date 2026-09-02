@@ -18,6 +18,8 @@ let votes = {
 
 io.on("connection", (socket) => {
 
+    console.log("User connected");
+
     socket.emit("voteUpdate", votes);
 
     socket.on("vote", (option) => {
